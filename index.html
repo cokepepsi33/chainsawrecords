@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chainsaw Records</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,'Times New Roman',serif;background:#0d0d0d;color:#e8e2d9;min-height:100vh}
+header{border-bottom:2px solid #c0392b;padding:2.5rem 2rem 1.5rem;max-width:980px;margin:0 auto}
+header h1{font-size:2.8rem;font-weight:normal;letter-spacing:.04em;color:#fff}
+header p{margin-top:.4rem;font-size:.9rem;color:#aaa;letter-spacing:.12em;text-transform:uppercase}
+main{max-width:980px;margin:0 auto;padding:2rem 2rem 4rem}
+section+section{margin-top:3rem}
+h2{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#c0392b;margin-bottom:1.5rem;padding-bottom:.4rem;border-bottom:1px solid #2a2a2a}
+.zines{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.zine{background:#1a1a1a;border:1px solid #2a2a2a;padding:1rem 1.2rem;border-radius:2px}
+.cat{font-size:.65rem;color:#c0392b;letter-spacing:.12em;text-transform:uppercase}
+.zine .artist{font-size:.9rem;color:#ccc;font-weight:bold;margin:.25rem 0 .1rem}
+.zine .ztitle{font-style:italic;font-size:.9rem;color:#fff}
+.zine .year{font-size:.75rem;color:#666;margin-top:.25rem}
+.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:1.8rem}
+.release a{text-decoration:none;color:inherit;display:block}
+.cover{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#1c1c1c;border:1px solid #2a2a2a;transition:opacity .2s}
+.release a:hover .cover{opacity:.8}
+.no-img{width:100%;aspect-ratio:1/1;background:#161616;border:1px solid #2a2a2a;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#444;text-align:center;letter-spacing:.06em;text-transform:uppercase}
+.info{padding:.55rem 0 0}
+.info .cat{margin-bottom:.2rem}
+.info .artist{font-size:.85rem;color:#bbb;font-weight:bold;margin:.15rem 0}
+.info .rtitle{font-size:.9rem;color:#fff;font-style:italic;line-height:1.3}
+.info .fmt{font-size:.72rem;color:#555;margin-top:.2rem}
+footer{text-align:center;padding:2rem;font-size:.7rem;color:#444;border-top:1px solid #1e1e1e;letter-spacing:.08em}
+@media(max-width:600px){header h1{font-size:2rem}.catalog{grid-template-columns:repeat(2,1fr);gap:1rem}}
+</style>
+</head>
+<body>
+<header>
+<h1>Chainsaw Records</h1>
+<p>Portland, Oregon &mdash; Est. 1991 &mdash; Queercore</p>
+</header>
+<main>
+<section>
+<h2>Pre-Label Zines</h2>
+<div class="zines">
+<div class="zine"><div class="cat">CHSW 1</div><div class="artist">Donna Dresch</div><div class="ztitle">Chainsaw (zine, issue 1)</div><div class="year">Zine &mdash; late 1980s</div></div>
+<div class="zine"><div class="cat">CHSW 2</div><div class="artist">Donna Dresch</div><div class="ztitle">Chainsaw (zine, issue 2)</div><div class="year">Zine &mdash; c. 1989&ndash;90</div></div>
+<div class="zine"><div class="cat">CHSW 3</div><div class="artist">Donna Dresch</div><div class="ztitle">Chainsaw (zine, issue 3)</div><div class="year">Zine &mdash; c. 1990&ndash;91</div></div>
+</div>
+</section>
+<section>
+<h2>Label Releases</h2>
+<div class="catalog">
+<div class="release"><a href="https://www.discogs.com/search/?q=chainsaw+4+1992" target="_blank"><img class="cover" src="https://i.discogs.com/pNH53gVi2qp99S3m2N3ND61upYAOBXDSafS8D4G_cK8/rs:fit/g:sm/q:90/h:500/w:500/czM6Ly9kaXNjb2dzLWRhdGFiYXNlLWltYWdlcy9SLTEzNTQyMzU3LTE1NTYxOTkzNjQtOTY4OS5qcGVn.jpeg" alt="CHSW 4" onerror="this.outerHTML='<div class=no-img>CHSW 4</div>'"/></a><div class="info"><div class="cat">CHSW 4</div><div class="artist">Various Artists</div><div class="rtitle">Chainsaw 4</div><div class="fmt">Cassette, 1992</div></div></div>
+<div class="release"><a href="https://www.discogs.com/search/?q=sleater-kinney+1995+chainsaw" target="_blank"><img class="cover" src="https://i.discogs.com/FCqNXQ1l2TMxzz1Sex4LYwdfKcVtQchQBKd2NVuFY94/rs:fit/g:sm/q:90/h:600/w:593/czM6Ly9kaXNjb2dzLWRhdGFiYXNlLWltYWdlcy9SLTQ2MjM1MS0xMzA5ODcwNjYy/LmpwZWc.jpeg" alt="Sleater-Kinney" onerror="this.outerHTML='<div class=no-img>CHSW 12</div>'"/></a><div class="info"><div class="cat">CHSW 12</div><div class="artist">Sleater-Kinney</div><div class="rtitle">Sleater-Kinney</div><div class="fmt">LP / CD, 1995</div></div></div>
+<div class="release"><a href="https://www.discogs.com/release/762934-Team-Dresch-Captain-My-Captain" target="_blank"><img class="cover" src="https://i.discogs.com/bMROPcjRq22rlnXKUDDuJDZL100dfPAcEaa-wVfyhGg/rs:fit/g:sm/q:90/h:500/w:500/czM6Ly9kaXNjb2dzLWRhdGFiYXNlLWltYWdlcy9SLTc2MjkzNC0xMzY5MTgxNDU1LTI5MjQuanBlZw.jpeg" alt="Captain My Captain" onerror="this.outerHTML='<div class=no-img>CHSW 18</div>'"/></a><div class="info"><div class="cat">CHSW 18</div><div class="artist">Team Dresch</div><div class="rtitle">Captain My Captain</div><div class="fmt">LP / CD, 1996</div></div></div>
+</div>
+</section>
+</main>
+<footer>&copy; 2026 Chainsaw Records</footer>
+</body>
+</html>
