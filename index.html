@@ -1,63 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Chainsaw Records</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Georgia,'Times New Roman',serif;background:#0d0d0d;color:#e8e2d9;min-height:100vh}
-header{border-bottom:2px solid #c0392b;padding:2.5rem 2rem 1.5rem;max-width:980px;margin:0 auto}
-header h1{font-size:2.8rem;font-weight:normal;letter-spacing:.04em;color:#fff}
-header p{margin-top:.4rem;font-size:.9rem;color:#aaa;letter-spacing:.12em;text-transform:uppercase}
-main{max-width:980px;margin:0 auto;padding:2rem 2rem 4rem}
-section+section{margin-top:3rem}
-h2{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#c0392b;margin-bottom:1.5rem;padding-bottom:.4rem;border-bottom:1px solid #2a2a2a}
-.zines{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
-.zine{background:#1a1a1a;border:1px solid #2a2a2a;padding:1rem 1.2rem;border-radius:2px}
-.cat{font-size:.65rem;color:#c0392b;letter-spacing:.12em;text-transform:uppercase}
-.zine .artist{font-size:.9rem;color:#ccc;font-weight:bold;margin:.25rem 0 .1rem}
-.zine .ztitle{font-style:italic;font-size:.9rem;color:#fff}
-.zine .year{font-size:.75rem;color:#666;margin-top:.25rem}
-.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:1.8rem}
-.release a{text-decoration:none;color:inherit;display:block}
-.cover{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#1c1c1c;border:1px solid #2a2a2a;transition:opacity .2s}
-.release a:hover .cover{opacity:.8}
-.no-img{width:100%;aspect-ratio:1/1;background:#161616;border:1px solid #2a2a2a;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#444;text-align:center;letter-spacing:.06em;text-transform:uppercase}
-.info{padding:.55rem 0 0}
-.info .cat{margin-bottom:.2rem}
-.info .artist{font-size:.85rem;color:#bbb;font-weight:bold;margin:.15rem 0}
-.info .rtitle{font-size:.9rem;color:#fff;font-style:italic;line-height:1.3}
-.info .fmt{font-size:.72rem;color:#555;margin-top:.2rem}
-footer{text-align:center;padding:2rem;font-size:.7rem;color:#444;border-top:1px solid #1e1e1e;letter-spacing:.08em}
-@media(max-width:600px){header h1{font-size:2rem}.catalog{grid-template-columns:repeat(2,1fr);gap:1rem}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chainsaw Records Catalog</title>
+  <style>
+    :root {
+      --bg-color: #080808;
+      --accent: #c0392b;
+      --text: #f0f0f0;
+      --border: #333;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Georgia", serif;
+      background-color: var(--bg-color);
+      background-image: url('chainsaw.png');
+      background-repeat: repeat;
+      background-size: 350px;
+      background-attachment: fixed;
+      color: var(--text);
+      line-height: 1.4;
+      font-size: 1.4rem;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(8, 8, 8, 0.9);
+      z-index: -1;
+    }
+    header {
+      padding: 5rem 2rem;
+      text-align: center;
+      border-bottom: 4px solid var(--accent);
+      margin-bottom: 4rem;
+    }
+    h1 {
+      font-size: 5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    header p {
+      font-size: 1.6rem;
+      letter-spacing: 0.2em;
+      color: #888;
+      text-transform: uppercase;
+    }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 10rem;
+    }
+    section + section { margin-top: 6rem; }
+    h2 {
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 3rem;
+    }
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 4rem 3rem;
+    }
+    .release {
+      display: flex;
+      flex-direction: column;
+    }
+    .cover-box {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #111;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .cover-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .no-scan {
+      font-size: 1rem;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .info { display: flex; flex-direction: column; gap: 0.4rem; }
+    .cat-num {
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-weight: bold;
+      letter-spacing: 0.1em;
+    }
+    .artist { font-size: 1.8rem; font-weight: bold; color: #fff; }
+    .title { font-size: 1.6rem; font-style: italic; color: #ccc; }
+    .fmt-year { font-size: 1.1rem; color: #666; }
+    footer {
+      text-align: center;
+      padding: 5rem 2rem;
+      border-top: 1px solid #222;
+      color: #444;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 3rem; }
+      .catalog { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-<header>
-<h1>Chainsaw Records</h1>
-<p>Portland, Oregon &mdash; Est. 1991 &mdash; Queercore</p>
-</header>
-<main>
-<section>
-<h2>Pre-Label Zines</h2>
-<div class="zines">
-<div class="zine"><div class="cat">CHSW 1</div><div class="artist">Donna Dresch</div><div class="ztitle">Chainsaw (zine, issue 1)</div><div class="year">Zine &mdash; late 1980s</div></div>
-<div class="zine"><div class="cat">CHSW 2</div><div class="artist">Donna Dresch</div><div class="ztitle">Chainsaw (zine, issue 2)</div><div class="year">Zine &mdash; c. 1989&ndash;90</div></div>
-<div class="zine"><div class="cat">CHSW 3</div><div class="artist">Donna Dresch</div><div class="ztitle">Chainsaw (zine, issue 3)</div><div class="year">Zine &mdash; c. 1990&ndash;91</div></div>
-</div>
-</section>
-<section>
-<h2>Label Releases</h2>
-<div class="catalog">
-<div class="release"><a href="https://www.discogs.com/search/?q=chainsaw+4+1992" target="_blank"><img class="cover" src="https://i.discogs.com/pNH53gVi2qp99S3m2N3ND61upYAOBXDSafS8D4G_cK8/rs:fit/g:sm/q:90/h:500/w:500/czM6Ly9kaXNjb2dzLWRhdGFiYXNlLWltYWdlcy9SLTEzNTQyMzU3LTE1NTYxOTkzNjQtOTY4OS5qcGVn.jpeg" alt="CHSW 4" onerror="this.outerHTML='<div class=no-img>CHSW 4</div>'"/></a><div class="info"><div class="cat">CHSW 4</div><div class="artist">Various Artists</div><div class="rtitle">Chainsaw 4</div><div class="fmt">Cassette, 1992</div></div></div>
-<div class="release"><a href="https://www.discogs.com/search/?q=sleater-kinney+1995+chainsaw" target="_blank"><img class="cover" src="https://i.discogs.com/FCqNXQ1l2TMxzz1Sex4LYwdfKcVtQchQBKd2NVuFY94/rs:fit/g:sm/q:90/h:600/w:593/czM6Ly9kaXNjb2dzLWRhdGFiYXNlLWltYWdlcy9SLTQ2MjM1MS0xMzA5ODcwNjYy/LmpwZWc.jpeg" alt="Sleater-Kinney" onerror="this.outerHTML='<div class=no-img>CHSW 12</div>'"/></a><div class="info"><div class="cat">CHSW 12</div><div class="artist">Sleater-Kinney</div><div class="rtitle">Sleater-Kinney</div><div class="fmt">LP / CD, 1995</div></div></div>
-<div class="release"><a href="https://www.discogs.com/release/762934-Team-Dresch-Captain-My-Captain" target="_blank"
-                       <div class="release"><a href="https://www.discogs.com/search/?q=frumpies+alien" target="_blank"><div class="no-img">CHSW 6</div></a><div class="info"><div class="cat">CHSW 6</div><div class="artist">Frumpies</div><div class="rtitle">Alien Summer Nights</div><div class="fmt">7", 1993</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=excuse+seventeen" target="_blank"><div class="no-img">CHSW 9</div></a><div class="info"><div class="cat">CHSW 9</div><div class="artist">Excuse Seventeen</div><div class="rtitle">Excuse Seventeen</div><div class="fmt">LP/CD, 1995</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=team+dresch+personal" target="_blank"><div class="no-img">CHSW 11</div></a><div class="info"><div class="cat">CHSW 11</div><div class="artist">Team Dresch</div><div class="rtitle">Personal Best</div><div class="fmt">LP/CD/Cass, 1995</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=sleater+call+doctor" target="_blank"><div class="no-img">CHSW 13</div></a><div class="info"><div class="cat">CHSW 13</div><div class="artist">Sleater-Kinney</div><div class="rtitle">Call The Doctor</div><div class="fmt">LP/CD, 1996</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=the+need+1997" target="_blank"><div class="no-img">CHSW 19</div></a><div class="info"><div class="cat">CHSW 19</div><div class="artist">The Need</div><div class="rtitle">The Need</div><div class="fmt">CD, 1997</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=need+is+dead" target="_blank"><div class="no-img">CHSW 20</div></a><div class="info"><div class="cat">CHSW 20</div><div class="artist">The Need</div><div class="rtitle">The Need Is Dead</div><div class="fmt">CD, 2000</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=third+sex+back" target="_blank"><div class="no-img">CHSW 21</div></a><div class="info"><div class="cat">CHSW 21</div><div class="artist">The Third Sex</div><div class="rtitle">Back To Go</div><div class="fmt">CD, 1999</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=no+2+memory" target="_blank"><div class="no-img">CHSW 22</div></a><div class="info"><div class="cat">CHSW 22</div><div class="artist">No. 2</div><div class="rtitle">No Memory</div><div class="fmt">CD, 1999</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=tracy+plastics+muscler" target="_blank"><div class="no-img">CHSW 23</div></a><div class="info"><div class="cat">CHSW 23</div><div class="artist">Tracy + The Plastics</div><div class="rtitle">Muscler's Guide to Videonics</div><div class="fmt">CD, 2001</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=infinite+xs" target="_blank"><div class="no-img">CHSW 25</div></a><div class="info"><div class="cat">CHSW 25</div><div class="artist">The Infinite Xs</div><div class="rtitle">The Infinite Xs</div><div class="fmt">LP/CD, 2002</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=tracy+forever+sucks" target="_blank"><div class="no-img">CHSW 26</div></a><div class="info"><div class="cat">CHSW 26</div><div class="artist">Tracy + The Plastics</div><div class="rtitle">Forever Sucks EP</div><div class="fmt">CD, 2002</div></div></div><div class="release"><a href="https://www.discogs.com/search/?q=show+pink+velocipedomania" target="_blank"><div class="no-img">CHSW 28</div></a><div class="info"><div class="cat">CHSW 28</div><div class="artist">Show Me The Pink</div><div class="rtitle">Velocipedomania!</div><div class="fmt">CD, 2005</div></div></div>><img class="cover" src="https://i.discogs.com/bMROPcjRq22rlnXKUDDuJDZL100dfPAcEaa-wVfyhGg/rs:fit/g:sm/q:90/h:500/w:500/czM6Ly9kaXNjb2dzLWRhdGFiYXNlLWltYWdlcy9SLTc2MjkzNC0xMzY5MTgxNDU1LTI5MjQuanBlZw.jpeg" alt="Captain My Captain" onerror="this.outerHTML='<div class=no-img>CHSW 18</div>'"/></a><div class="info"><div class="cat">CHSW 18</div><div class="artist">Team Dresch55
-  <div class="rtitle">Captain My Captain</div><div class="fmt">LP / CD, 1996</div></div></div>
-</div>
-</section>
-</main>
-<footer>&copy; 2026 Chainsaw Records</footer>
+  <header>
+    <h1>Chainsaw Records</h1>
+    <p>Portland, Oregon • Est. 1991</p>
+  </header>
+  <main>
+    <section>
+      <h2>Zines</h2>
+      <div class="catalog">
+        <div class="release">
+          <div class="cover-box"><div class="no-scan">No Scan</div></div>
+          <div class="info">
+            <div class="cat-num">CHSW 1</div>
+            <div class="artist">Donna Dresch</div>
+            <div class="title">Chainsaw zine #1</div>
+            <div class="fmt-year">late 1980s</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><div class="no-scan">No Scan</div></div>
+          <div class="info">
+            <div class="cat-num">CHSW 2</div>
+            <div class="artist">Donna Dresch</div>
+            <div class="title">Chainsaw zine #2</div>
+            <div class="fmt-year">late 1980s</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><div class="no-scan">No Scan</div></div>
+          <div class="info">
+            <div class="cat-num">CHSW 3</div>
+            <div class="artist">Donna Dresch</div>
+            <div class="title">Chainsaw zine #3</div>
+            <div class="fmt-year">late 1980s</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Discography</h2>
+      <div class="catalog">
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/pNH53gVi2qp99S3m2N3ND61upYAOBXDSafS8D4G_cK8/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzNTQy/MzU3LTE1NTYxOTkz/NjQtOTY4OS5qcGVn.jpeg" alt="CHSW 4"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 4</div>
+            <div class="artist">Various Artists</div>
+            <div class="title">Chainsaw 4</div>
+            <div class="fmt-year">Cassette Compilation, 1992</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><div class="no-scan">Secret</div></div>
+          <div class="info">
+            <div class="cat-num">CHSW 5</div>
+            <div class="artist">Secret Release</div>
+            <div class="title">&nbsp;</div>
+            <div class="fmt-year">&nbsp;</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/4vTl4cGEZXHskNZYdmxaVhJne34ep8Dtl0M1Pj1NiXA/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIyMjA4/MzAtMTMzNDI4MTk3/Ny5qcGVn.jpeg" alt="CHSW 6"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 6</div>
+            <div class="artist">Frumpies</div>
+            <div class="title">Alien Summer Nights</div>
+            <div class="fmt-year">7", 1993</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/cEhTuophs2nFlJj7LEHwgWEzGb6-Tw2nC7LcaOaJI_M/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc0MTU1/MzktMTQ4MjM0NDAx/MC01MzY2LmpwZWc.jpeg" alt="CHSW 7"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 7</div>
+            <div class="artist">Heartless Martin</div>
+            <div class="title">Tonigh</div>
+            <div class="fmt-year">Cassette EP, 1993</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/P-5K0sdkAOisc4_Q-5PCGa57KjGDZL5sWfZeCx4MPnE/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0NTk4/MjMtMTI4MDQ5NjE3/Mi5qcGVn.jpeg" alt="CHSW 8"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 8</div>
+            <div class="artist">The Fakes</div>
+            <div class="title">Real Fiction</div>
+            <div class="fmt-year">LP/CD, 1995</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/SYJJd_MP46HJFKAfsXpL3YsLG_H6zlGFGp54ULEd1_Q/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc3ODM3/OC0xNjgzNjc2MTYz/LTY5OTguanBlZw.jpeg" alt="CHSW 9"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 9</div>
+            <div class="artist">Excuse Seventeen</div>
+            <div class="title">Excuse Seventeen</div>
+            <div class="fmt-year">LP/CD, 1995</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/uOlY1OmruUy2uJ9VFRaP_hEFWrwS4gCP4zAuFsLQtik/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3MDYz/NTItMTIzOTc3NzA1/My5qcGVn.jpeg" alt="CHSW 10"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 10</div>
+            <div class="artist">Heavens to Betsy</div>
+            <div class="title">Direction...</div>
+            <div class="fmt-year">7", 1994</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/iqOtXSvvKrYom-hpXHblASTFTpnPrRacvzBtS1D4Xhk/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ3MTQ5/Ny0xMzY5MTgyMzgy/LTIwMTYuanBlZw.jpeg" alt="CHSW 11"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 11</div>
+            <div class="artist">Team Dresch</div>
+            <div class="title">Personal Best</div>
+            <div class="fmt-year">LP/CD/Cassette, 1995</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/af_u2lgEJKcX2VQuTN-s5ue62Me8u-n5QjiqFWvPF30/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExODE5/NDQtMTQ3NDU3Nzg5/MS03OTU0LmpwZWc.jpeg" alt="CHSW 12"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 12</div>
+            <div class="artist">Sleater-Kinney</div>
+            <div class="title">Sleater-Kinney</div>
+            <div class="fmt-year">LP/CD, 1995</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/o89bOgFX9797-BGDYvqPUxFfKnrpmgfKobtIlJCD-r0/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwMzM2/OTctMTQwODg3NTMw/MC0xNjU1LmpwZWc.jpeg" alt="CHSW 13"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 13</div>
+            <div class="artist">Sleater-Kinney</div>
+            <div class="title">Call The Doctor</div>
+            <div class="fmt-year">LP/CD, 1996</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/kyaB0-CbA5ivSjjn5y3Dl_FeshyzV6hodxz_tqW_aSk/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQxMTg4/NS0xNjkwMjcyMjc5/LTUyOTUuanBlZw.jpeg" alt="CHSW 14"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 14</div>
+            <div class="artist">Kaia</div>
+            <div class="title">Kaia</div>
+            <div class="fmt-year">LP/CD, 1996</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/GYvVr7n7a4UWHp1aotI6jfrzVb32zhftNTNVIm4_Snc/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0OTI3/NjQtMTM2OTE4NzAw/NC03MjM1LmpwZWc.jpeg" alt="CHSW 15"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 15</div>
+            <div class="artist">The Third Sex</div>
+            <div class="title">Card Carryin'</div>
+            <div class="fmt-year">CD, 1996</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/luP88eDOoFSbyVNjzpAREYYhL9xjLDbFTX1TelvFfNw/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg3MTI1/NS0xMTY3OTk1MjM4/LmpwZWc.jpeg" alt="CHSW 17"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 17</div>
+            <div class="artist">Longstocking</div>
+            <div class="title">Once Upon A Time Called Now</div>
+            <div class="fmt-year">LP/CD, 1997</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/bMROPcjRq22rlnXKUDDuJDZL100dfPAcEaa-wVfyhGg/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc2Mjkz/NC0xMzY5MTgxNDU1/LTI5MjQuanBlZw.jpeg" alt="CHSW 18"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 18</div>
+            <div class="artist">Team Dresch</div>
+            <div class="title">Captain My Captain</div>
+            <div class="fmt-year">LP/CD, 1996</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/0-lSp8pzqsezuPwH41jHscfh3Rswaj2bqjs2YbAMelU/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2Mjcw/Ni0xNTI0MzM1ODE4/LTg2MjQuanBlZw.jpeg" alt="CHSW 19"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 19</div>
+            <div class="artist">The Need</div>
+            <div class="title">The Need</div>
+            <div class="fmt-year">CD, 1997</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/FbapS-3q1SJg9AaY2aL0YwmOd4gXCbZK-7rPqMcwpfI/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2Mjc5/NC0xMzY5MTgyOTYy/LTI2MTMuanBlZw.jpeg" alt="CHSW 20"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 20</div>
+            <div class="artist">The Need</div>
+            <div class="title">The Need Is Dead</div>
+            <div class="fmt-year">CD, 2000</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/EM6K2ZMkd-D4ubsC9q34EhNpHab6vkMfBDOJ6-w-HTw/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMyMDUz/MzItMTM2OTE4MzE3/OC05ODQ2LmpwZWc.jpeg" alt="CHSW 21"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 21</div>
+            <div class="artist">The Third Sex</div>
+            <div class="title">Back To Go</div>
+            <div class="fmt-year">CD, 1999</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/NdodHE2vhrWf4hMfMRi89RrcTyCvf-rQ3ALinOwMXRU/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5MTYz/NjQtMTYwMDkwMDY1/Ni0zODQyLmpwZWc.jpeg" alt="CHSW 22"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 22</div>
+            <div class="artist">No. 2</div>
+            <div class="title">No Memory</div>
+            <div class="fmt-year">CD, 1999</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/NozkxavDgMVwxlLTV9dSnTi5b4Uqh9IzOyRS52_3FtE/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2MDc4/My0xMzY5MTkwMzA2/LTMzNjMuanBlZw.jpeg" alt="CHSW 23"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 23</div>
+            <div class="artist">Tracy + The Plastics</div>
+            <div class="title">Muscler's Guide to Videonics</div>
+            <div class="fmt-year">CD, 2001</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/UbFC5u9Rv5_2a4jXf4Mv0jvk9vW8gVxld985StISmCc/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2OTcx/ODYtMTM2OTE4NDU4/MC0xMjAxLmpwZWc.jpeg" alt="CHSW 25"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 25</div>
+            <div class="artist">The Infinite Xs</div>
+            <div class="title">The Infinite Xs</div>
+            <div class="fmt-year">LP/CD, 2002</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/bqw1EN5MeN39xOoyyd2QBiBqbsBaMil-AqZ_j4a8k98/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgxMjU3/MC0xMzY5MTkwODM2/LTI2MjUuanBlZw.jpeg" alt="CHSW 26"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 26</div>
+            <div class="artist">Tracy + The Plastics</div>
+            <div class="title">Forever Sucks EP</div>
+            <div class="fmt-year">CD, 2002</div>
+          </div>
+        </div>
+        <div class="release">
+          <div class="cover-box"><img src="https://i.discogs.com/pBX7xEOKmkyo2kGiXiX2VvKUNpDmhnJJvXdyyDvFdfY/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ1ODcz/NTMtMTM2OTE5MjI5/OS05NDMzLmpwZWc.jpeg" alt="CHSW 28"></div>
+          <div class="info">
+            <div class="cat-num">CHSW 28</div>
+            <div class="artist">Show Me The Pink</div>
+            <div class="title">Velocipedomania!</div>
+            <div class="fmt-year">CD, 2005</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    &copy; 2026 Chainsaw Records • Portland, Oregon
+  </footer>
 </body>
 </html>
